@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d1018" />
+    <title>Forgebound: Iron War</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">DARK FORGE ADVENTURE</p>
+          <h1>FORGEBound</h1>
+        </div>
+        <button id="resetButton" class="ghost-button">Reset</button>
+      </header>
+
+      <main class="game-stage">
+        <section class="arena-panel">
+          <div class="fighters-header">
+            <div class="label pill">Warrior</div>
+            <div class="label pill warning">Wave <span id="waveCounter">1</span></div>
+          </div>
+
+          <div class="fighter-row">
+            <div class="fighter-card hero-card">
+              <div class="portrait hero-portrait"></div>
+              <div class="stats-stack">
+                <div class="name-row">
+                  <span class="name">Alden</span>
+                  <span class="tier" id="gearTier">Iron</span>
+                </div>
+
+                <div class="bar-wrap">
+                  <div class="bar-label-row">
+                    <span>Health</span>
+                    <span id="heroHpText">100 / 100</span>
+                  </div>
+                  <div class="health-bar"><div id="heroHpBar" class="bar-fill hp-fill"></div></div>
+                </div>
+
+                <div class="bar-wrap">
+                  <div class="bar-label-row">
+                    <span>Rage</span>
+                    <span id="rageText">0%</span>
+                  </div>
+                  <div class="rage-bar"><div id="rageBar" class="bar-fill rage-fill"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="versus">VS</div>
+
+            <div class="fighter-card enemy-card">
+              <div id="enemyPortrait" class="portrait enemy-portrait"></div>
+              <div class="stats-stack">
+                <div class="name-row">
+                  <span class="name" id="enemyName">Raider</span>
+                  <span class="tier" id="enemyTier">Rank I</span>
+                </div>
+
+                <div class="bar-wrap">
+                  <div class="bar-label-row">
+                    <span>Enemy HP</span>
+                    <span id="enemyHpText">50 / 50</span>
+                  </div>
+                  <div class="health-bar enemy-hp"><div id="enemyHpBar" class="bar-fill enemy-fill"></div></div>
+                </div>
+
+                <div class="attack-info">
+                  <span id="enemyDamageText">8 dmg</span>
+                  <span id="enemyTypeText">brute</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="combat-panel">
+          <div class="title-row">
+            <h2>Battle</h2>
+            <div class="status-badge" id="statusBadge">Fighting</div>
+          </div>
+
+          <div class="combat-actions">
+            <button id="attackButton" class="action-button primary">Swing</button>
+            <button id="specialButton" class="action-button accent">Rage Burst</button>
+          </div>
+
+          <div class="battle-log" id="battleLog">
+            <p>Forgefire awakens. The arena calls your name.</p>
+          </div>
+        </section>
+
+        <section class="hud-panel">
+          <div class="stat-box">
+            <span class="stat-label">Gold</span>
+            <strong id="goldValue">0</strong>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Ore</span>
+            <strong id="oreValue">0</strong>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Shards</span>
+            <strong id="shardsValue">0</strong>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Level</span>
+            <strong id="levelValue">1</strong>
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav">
+        <button id="forgeButton" class="nav-btn active">Forge</button>
+        <button id="nextWaveButton" class="nav-btn">Next Wave</button>
+        <button id="upgradeButton" class="nav-btn">Upgrades</button>
+      </nav>
+    </div>
+
+    <aside id="forgeModal" class="modal hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow small">THE FORGE</p>
+            <h3>Weapon Works</h3>
+          </div>
+          <button id="closeForge" class="close-button">×</button>
+        </div>
+
+        <div class="forge-grid">
+          <div class="forge-card">
+            <div>
+              <span class="forge-name">Blade</span>
+              <small>Damage</small>
+            </div>
+            <div class="forge-meta">
+              <strong id="bladeLevel">0</strong>
+              <button data-upgrade="blade" class="shop-button">+ Upgrade</button>
+            </div>
+          </div>
+
+          <div class="forge-card">
+            <div>
+              <span class="forge-name">Armor</span>
+              <small>Defense</small>
+            </div>
+            <div class="forge-meta">
+              <strong id="armorLevel">0</strong>
+              <button data-upgrade="armor" class="shop-button">+ Upgrade</button>
+            </div>
+          </div>
+
+          <div class="forge-card">
+            <div>
+              <span class="forge-name">Crit</span>
+              <small>Chance</small>
+            </div>
+            <div class="forge-meta">
+              <strong id="critLevel">0</strong>
+              <button data-upgrade="crit" class="shop-button">+ Upgrade</button>
+            </div>
+          </div>
+
+          <div class="forge-card">
+            <div>
+              <span class="forge-name">Vitality</span>
+              <small>Health</small>
+            </div>
+            <div class="forge-meta">
+              <strong id="vitalityLevel">0</strong>
+              <button data-upgrade="vitality" class="shop-button">+ Upgrade</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <script src="app.js"></script>
+  </body>
+</html>
